@@ -4,12 +4,11 @@ import {
   isRef,
   computed,
   watch,
-  // @ts-expect-error
-  onServerPrefetch,
   getCurrentInstance,
   onBeforeUnmount,
   nextTick,
 } from 'vue-demi'
+import { serverPrefetch } from 'vue'
 import { DocumentNode } from 'graphql'
 import {
   OperationVariables,
@@ -168,7 +167,7 @@ export function useQueryImpl<
   // SSR
   let firstResolve: Function | undefined
   let firstReject: Function | undefined
-  onServerPrefetch?.(() => {
+  serverPrefetch?.(() => {
     if (!isEnabled.value || (isServer && currentOptions.value?.prefetch === false)) return
 
     return new Promise((resolve, reject) => {
